@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+
+#special files
+/src/app/table-frame
+/src/app/functions-dialog
+/src/app/query-chips-component

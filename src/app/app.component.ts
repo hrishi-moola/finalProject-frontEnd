@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ngcli-webpack';
+  title = 'APP';
+
+  constructor(private router: Router) {
+  }
+
+  logout(){
+      console.log("tryna logout");
+      localStorage.TOKEN = "";
+      this.router.navigateByUrl('/login');
+      console.log("shouldve logout");
+
+  }
 }
