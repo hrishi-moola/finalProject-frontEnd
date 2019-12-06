@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogDataExampleDialog } from '../functions-dialog/functions-dialog.component';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-new-user-reg',
@@ -31,6 +32,7 @@ export class NewUserRegComponent implements OnInit {
 
 export class userDetails{
   email : string;
+  userName: string;
   password1 : string; 
   password2 : string; 
 
@@ -47,28 +49,30 @@ export class userDetails{
 })
 export class UserRegistrationDialog {
   responseData : string;
-  selectorData : Map<String,String>;
-  user = new userDetails();
+  userDetails = new userDetails();
 
   @Output() tableContents: EventEmitter<string> = new EventEmitter<string>();
+  var : any;
 
   registerUser(){
     this.responseData = "";
-    console.table(this.user);
-    // this.querySelectHandler.runSelectQuery(this.selectorData).subscribe(
-    //   data => {
-    //     this.responseData = data as string ;	 // FILL THE ARRAY WITH DATA.
-    //     this.dialogRef.close({data : this.responseData});
-    //     this.tableContents.emit(this.responseData);
-    //     console.log(this.responseData);
-    //   },
-    //   error => {
-    //     console.log (error.message);
-    //   }
-    // );
+    console.table(this.userDetails);
+    this.var = this.api.regNewUser(
+      this.userDetails.userName,
+      this.userDetails.email,
+      this.userDetails.password1
+    ).subscribe(
+      r => {
+        console.log(r);
+        if (r.auth) {
+          alert("User registered Succesfully");
+        }
+      },
+      r => {
+        alert(r.error.error);
+      });
     alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
-  constructor(public dialogRef: MatDialogRef<DialogDataExampleDialog>, @Inject(MAT_DIALOG_DATA) public data: Map<String, String>) {
-    this.selectorData = data;
+  constructor(public dialogRef: MatDialogRef<DialogDataExampleDialog>, private api: ApiService) {
   }
 }

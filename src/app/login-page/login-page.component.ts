@@ -22,14 +22,25 @@ export class LoginPageComponent implements OnInit {
     this.var = this.api.login(
       this.email,
       this.password
-    );
-    if (this.var.token) {
-      this.user.setToken(this.var.token);
-      this.router.navigateByUrl('/landingPage');
-    } else{
-      alert(this.var.error);
-
-    }
+    ).subscribe(
+      r => {
+        console.log(r);
+        if (r.auth) {
+          this.user.setToken(r.token);
+          this.router.navigateByUrl('/landingPage');
+        } else {
+          alert(r.error);
+        }
+      },
+      r => {
+        alert(r.error);
+      });
+    // if (this.var.token) {
+    //   this.user.setToken(this.var.token);
+    //   this.router.navigateByUrl('/landingPage');
+    // } else{
+    //   alert(this.var.error);
+    // }
     }
 
 
