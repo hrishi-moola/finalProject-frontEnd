@@ -46,4 +46,10 @@ export class ApiService {
     getQuerySelectors(): Observable<QuerySelectorsModel>{
       return this.http.get<QuerySelectorsModel>('http://localhost:8090/hotels/search');
     }
+
+
+    reviewOperation(reviewInfo : any): Observable<String>{
+      return this.http.post<String>('http://localhost:8090/hotels/reviewsOperation', reviewInfo);
+    }
+
 }

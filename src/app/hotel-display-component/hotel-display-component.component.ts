@@ -30,13 +30,13 @@ hotelDataRetrieved : boolean = false;
     reviewList = this.allData.reviewList;
     let finalReviewList  = [];
     for(var x in reviewList){
-      var ts = new Date(reviewList[x].reviewDate).toDateString();
-
+      var ts = new Date(parseInt(reviewList[x].reviewDate)).toDateString();
       var reviewInfo = {
-        title: reviewList[x].name,
+        title: reviewList[x].title,
         reviewText: reviewList[x].reviewText,
-        user: reviewList[x].name,
+        user: reviewList[x].user,
         date: ts,
+        reviewId : reviewList[x].review_id,
         rating: reviewList[x].averageRating
       }
       finalReviewList.push(reviewInfo);
@@ -45,5 +45,7 @@ hotelDataRetrieved : boolean = false;
     console.log(this.reviews);
   }
 
-
+  toggleLike(review : any){
+    alert("Gotta like this one !" + review);
+  }
 }

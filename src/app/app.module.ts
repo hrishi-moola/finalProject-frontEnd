@@ -30,6 +30,7 @@ import { SearchComponentComponent, SearchResultsDialog } from './search-componen
 import {MatListModule} from '@angular/material/list';
 import { HotelDisplayComponentComponent } from './hotel-display-component/hotel-display-component.component';
 import {MatCardModule} from '@angular/material/card';
+import { ReviewDialogComponent } from './review-dialog/review-dialog.component';
 
 const appRoutes: Routes = [
   {
@@ -62,8 +63,9 @@ const appRoutes: Routes = [
     UserRegistrationDialog,
     GMapsComponent,
     SearchComponentComponent,
-    HotelDisplayComponentComponent  ],
-  entryComponents: [UserRegistrationDialog, SearchResultsDialog],
+    HotelDisplayComponentComponent,
+    ReviewDialogComponent  ],
+  entryComponents: [UserRegistrationDialog, SearchResultsDialog, UserRegistrationDialog],
 
   imports: [
     BrowserModule,

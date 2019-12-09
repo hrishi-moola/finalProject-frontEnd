@@ -1,16 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { DialogDataExampleDialog } from '../functions-dialog/functions-dialog.component';
 import { ApiService } from '../api.service';
 
 @Component({
-  selector: 'app-new-user-reg',
-  template: `<button (click) = "registerNewUser();"> Register New User </button>`,
-  styleUrls: ['./new-user-reg.component.css']
+  selector: 'app-review-dialog',
+  templateUrl: '<button (click) = "createReview();"> Create New Review </button>',
+  styleUrls: ['./review-dialog.component.css']
 })
-export class NewUserRegComponent implements OnInit {
+export class ReviewDialogComponent implements OnInit {
 
-  @Output() viewData: EventEmitter<string> = new EventEmitter<string>();
   dialogRef : any;
   constructor(public dialog: MatDialog) {}
 
@@ -29,13 +28,12 @@ export class NewUserRegComponent implements OnInit {
 
 
 
-
-export class userDetails{
-  email : string;
-  userName: string;
-  password1 : string; 
-  password2 : string; 
-
+export class reviewInfo{
+  title: string;
+  reviewText: string;
+  user: string;
+  date: string;
+  rating: number;
   constructor(){
 
   }
@@ -43,29 +41,26 @@ export class userDetails{
 
 @Component({
   selector: 'dialog-data-example-dialog',
-  templateUrl: 'new-user-reg.component.html',
+  templateUrl: 'review_dialog.component.html',
   providers: [  ]
 
 })
 export class UserRegistrationDialog {
   responseData : string;
-  userDetails = new userDetails();
+  review = new reviewInfo();
 
-  @Output() tableContents: EventEmitter<string> = new EventEmitter<string>();
   var : any;
+  // this.review.title,
+  // this.review.reviewText,
+  // this.review.rating.toString(),
+  // this.review.user,
+  // this.review.date,
   registerUser(){
     this.responseData = "";
-    console.table(this.userDetails);
-    this.var = this.api.regNewUser(
-      this.userDetails.userName,
-      this.userDetails.email,
-      this.userDetails.password1
-    ).subscribe(
+    console.table(this.review);
+    this.var = this.api.reviewOperation(this.review).subscribe(
       r => {
         console.log(r);
-        if (r.auth) {
-          alert("User registered Succesfully");
-        }
       },
       r => {
         alert(r.error.error);
