@@ -2,20 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { constructor } from 'q';
-
-
- class LoginResultModel {
-    token: string;
-    auth: boolean;
-    error: string;
-
-    constructor(private tokenNew : string, private errorNew : string, private authNew : boolean){
-        this.token = tokenNew;
-        this.error = errorNew;
-        this.auth = authNew;
-      }
-  }
-
+import {LoginResultModel, QuerySelectorsModel } from '../models'
 
   @Injectable({
     providedIn: 'root'
@@ -47,5 +34,16 @@ export class ApiService {
         email: email,
         password: password
       });
+    }
+
+    searchHotels(city: string, searchString: string): Observable<string>{
+      return this.http.post<string>('http://localhost:8090/hotels/search', {
+        city: city,
+        searchString: searchString,
+      });
+    }
+
+    getQuerySelectors(): Observable<QuerySelectorsModel>{
+      return this.http.get<QuerySelectorsModel>('http://localhost:8090/hotels/search');
     }
 }

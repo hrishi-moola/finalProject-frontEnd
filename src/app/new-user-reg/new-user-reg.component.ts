@@ -53,7 +53,7 @@ export class UserRegistrationDialog {
 
   @Output() tableContents: EventEmitter<string> = new EventEmitter<string>();
   var : any;
-
+n
   registerUser(){
     this.responseData = "";
     console.table(this.userDetails);

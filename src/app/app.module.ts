@@ -26,6 +26,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import {NeedAuthGuard} from './auth.guard';
 import { ApiService } from './api.service';
 import { NewUserRegComponent, UserRegistrationDialog } from './new-user-reg/new-user-reg.component';
+import { GMapsComponent } from './g-maps/g-maps.component';
+import { SearchComponentComponent } from './search-component/search-component.component';
 
 
 const appRoutes: Routes = [
@@ -51,7 +53,9 @@ const appRoutes: Routes = [
     LoginPageComponent,
     LandingPageComponent,
     NewUserRegComponent,
-    UserRegistrationDialog
+    UserRegistrationDialog,
+    GMapsComponent,
+    SearchComponentComponent
   ],
   entryComponents: [UserRegistrationDialog],
 

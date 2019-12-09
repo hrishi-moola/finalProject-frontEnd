@@ -1,0 +1,21 @@
+<p>search-component works!</p>
+
+<div>
+    <mat-form-field>
+    <mat-label>Select a Location</mat-label>
+    <mat-select [(ngModel)] = "selectedCity">
+      <mat-option *ngFor="let location of displayCities" [value]="location">
+        {{location}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Keywords for a hotel of your choice" aria-label="SearchString" matInput [(ngModel)] = "searchString" [formControl]="searchBar" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let hotel of filteredOptions | async" [value]="hotel">
+        {{hotel}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button type="submit" class="btn btn-secondary" (click)="submitSearchString()">Search</button>
+</div>
