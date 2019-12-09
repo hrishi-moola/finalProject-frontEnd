@@ -1,0 +1,17 @@
+<p>search-results-dialog works!</p>
+<h2 mat-dialog-title>Query Confirmation</h2>
+<mat-dialog-content class="mat-typography">
+    <h4> These are the hotels that fit your search. List may be truncated. </h4>
+    <mat-selection-list #shoes [(ngModel)]="selectedOptions">
+      <mat-list-option *ngFor="let shoe of data" [value] = "shoe.hotel_id">
+        {{shoe.hotelName}}
+      </mat-list-option>
+    </mat-selection-list>
+    <p>
+      Options selected: {{shoes.selectedOptions.selected.hotel_id}}
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click) = "submitRequest();" cdkFocusInitial>Submit Query</button>
+</mat-dialog-actions>

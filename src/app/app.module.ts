@@ -19,7 +19,6 @@ import { MatDialogModule } from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import { QueryChipsComponent} from './query-chips-component/query-chips-component.component';
-import { FunctionsDialogComponent, DialogDataExampleDialog } from './functions-dialog/functions-dialog.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -27,8 +26,10 @@ import {NeedAuthGuard} from './auth.guard';
 import { ApiService } from './api.service';
 import { NewUserRegComponent, UserRegistrationDialog } from './new-user-reg/new-user-reg.component';
 import { GMapsComponent } from './g-maps/g-maps.component';
-import { SearchComponentComponent } from './search-component/search-component.component';
-
+import { SearchComponentComponent, SearchResultsDialog } from './search-component/search-component.component';
+import {MatListModule} from '@angular/material/list';
+import { HotelDisplayComponentComponent } from './hotel-display-component/hotel-display-component.component';
+import {MatCardModule} from '@angular/material/card';
 
 const appRoutes: Routes = [
   {
@@ -41,6 +42,12 @@ const appRoutes: Routes = [
     canActivate: [NeedAuthGuard]
 
   },
+  {
+    path: 'hotelDetails',
+    component: HotelDisplayComponentComponent,
+    canActivate: [NeedAuthGuard]
+
+  }
 ];
 
 @NgModule({
@@ -48,16 +55,15 @@ const appRoutes: Routes = [
     AppComponent,
     TableFrameComponent,
     QueryChipsComponent,
-    FunctionsDialogComponent,
-    DialogDataExampleDialog,
     LoginPageComponent,
+    SearchResultsDialog,
     LandingPageComponent,
     NewUserRegComponent,
     UserRegistrationDialog,
     GMapsComponent,
-    SearchComponentComponent
-  ],
-  entryComponents: [UserRegistrationDialog],
+    SearchComponentComponent,
+    HotelDisplayComponentComponent  ],
+  entryComponents: [UserRegistrationDialog, SearchResultsDialog],
 
   imports: [
     BrowserModule,
@@ -68,6 +74,8 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatExpansionModule,
+    MatListModule,
+    MatCardModule,
     MatFormFieldModule, MatInputModule,
     FormsModule,
     ReactiveFormsModule,

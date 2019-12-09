@@ -1,0 +1,75 @@
+<p>hotel-display-component works!</p>
+
+
+
+<div class = "hotel-panel">
+    <ng-container *ngIf="hotel | async as hotel; else loading">
+      <h1> Hotel Page</h1>
+                <mat-divider></mat-divider>
+                <mat-card class="hotel-card">
+                        <mat-card-header>
+                            <div class="hotel-name-card"></div>
+                            <mat-card-title > {{hotel.hotelName}}</mat-card-title>
+                            <mat-card-subtitle> {{hotel.address}},{{hotel.city}}, {{hotel.state}}</mat-card-subtitle>
+                        </mat-card-header>
+                    </mat-card> 
+  </ng-container>
+  <ng-container *ngIf="reviews | async as reviews; else loading">
+        <h1> Reviews </h1>
+                  <mat-divider></mat-divider>
+                  <mat-card class="review-card" *ngFor="let review of reviews" style="margin-top:10px; background-color:lightgrey">
+                          <mat-card-header>
+                              <div class="review-name-card"></div>
+                              <mat-card-title > {{review.title}}  {{review.rating}} / 5</mat-card-title>
+                              <mat-card-subtitle> {{review.username}} on {{review.date}} </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                    <p>
+                                      {{review.reviewText}}
+                                    </p>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                    <button mat-button>
+                                      <mat-icon>LIKE</mat-icon>
+                                    </button>
+                                  </mat-card-actions>
+                      </mat-card> 
+    </ng-container>
+</div>
+
+<!-- <ng-container *ngFor="let tableMD of tablesMetaData; let tableIndex = index" >
+    <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{tableMD.tableName}}
+              </mat-panel-title>
+              <mat-panel-description>
+                Data regarding {{tableMD.tableName}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout="row">
+                    <mat-form-field>
+                        <input #filters matInput (keyup)="applyFilter($event.target.value , tableIndex)" placeholder="Filter">
+                    </mat-form-field>                         
+                    <query-chips-component [tableName] = tableMD.tableName [columns] = allColumns[tableIndex] style = "width : 100%" (finalSelections)='onSubmit($event)'>
+
+                    </query-chips-component>
+
+            </div>
+            <mat-divider></mat-divider>
+            <div>
+            <mat-table class = "innerContainer" #table [dataSource]="tablesDataSource[tableIndex]" class="mat-elevation-z8" matSort>
+                <ng-container *ngFor="let thisCol of allColumns[tableIndex]; let colIndex = index" matColumnDef="{{thisCol}}">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>{{thisCol}}</mat-header-cell>
+                       <mat-cell *matCellDef="let element "> {{element[thisCol]}}
+                          </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="allColumns[tableIndex]"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: allColumns[tableIndex];"></mat-row>
+              </mat-table>
+              <mat-paginator #paginator [hidden] [length]="50" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+            </mat-expansion-panel>
+</ng-container> -->
+
+

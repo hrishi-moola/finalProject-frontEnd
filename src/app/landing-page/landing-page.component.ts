@@ -31,13 +31,9 @@ export class LandingPageComponent implements OnInit {
   userInput = new FormControl();
   displayHotels : string[];
   displayCities : string[];
-  locations: location[] = [
-    {selection: 'Blah', displayName: 'City1'},
-    {selection: 'Blah2', displayName: 'City2'},
-    {selection: 'Blah3', displayName: 'City3'}
-  ];
-
   inputParams : QuerySelectorsModel;
+
+  hotelDetails : any;
 
   constructor(private api: ApiService, private router: Router) { 
     this.selectedCity = "";
@@ -47,16 +43,6 @@ export class LandingPageComponent implements OnInit {
   filteredOptions: Observable<string[]>;
 
   ngOnInit() {
-    this.var = this.api.getQuerySelectors().subscribe(
-      data =>{
-        this.displayHotels = data.hotels.split(",");
-        this.displayCities = data.cities.split(",");
-        console.log(this.displayCities);
-        console.log(this.displayHotels);
-      },
-      error => {
-        console.log(error);
-      }
-    )
+
   }
 }
