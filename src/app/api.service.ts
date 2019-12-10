@@ -49,7 +49,39 @@ export class ApiService {
 
 
     reviewOperation(reviewInfo : any): Observable<String>{
-      return this.http.post<String>('http://localhost:8090/hotels/reviews', JSON.stringify(reviewInfo));
+      return this.http.post<String>('http://localhost:8090/hotels/reviews', {
+        action : "reviewOp",
+        reviewText: reviewInfo.reviewText,
+        user: reviewInfo.user,
+        rating: reviewInfo.rating.toString(),
+        title: reviewInfo.title,
+        hotel_id: reviewInfo.hotelId.toString(),
+        review_id: reviewInfo.review_Id.toString()
+    });
     }
+
+
+    editReviewOperation(reviewInfo : any): Observable<String>{
+      return this.http.post<String>('http://localhost:8090/hotels/reviews', {
+        action : "editReviewOp",
+        reviewText: reviewInfo.reviewText,
+        user: reviewInfo.user,
+        rating: reviewInfo.rating.toString(),
+        title: reviewInfo.title,
+        hotel_id: reviewInfo.hotelId.toString(),
+        review_id: reviewInfo.reviewId.toString()
+    });
+    }
+
+    deleteReviewOperation(reviewInfo : any): Observable<String>{
+      return this.http.post<String>('http://localhost:8090/hotels/reviews', {
+        action : "deleteReviewOp",
+        review_id: reviewInfo.reviewId.toString()
+    });
+    }
+  //   addReview(reviewInfo : any){
+  //     return this.http.post('http://localhost:8090/hotels/reviews', JSON.stringify(reviewInfo));
+  // }  
+
 
 }

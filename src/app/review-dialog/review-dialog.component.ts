@@ -11,7 +11,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 })
 @Component({
   selector: 'app-review-dialog',
-  template: `<button (click) = "createReview();"> Create/ Edit Review </button>`,
+  template: `<button (click) = "createReview();"> Create Review </button>`,
   styleUrls: ['./review-dialog.component.css']
 })
 export class ReviewDialogComponent implements OnInit {
@@ -43,6 +43,7 @@ export class ReviewDialogComponent implements OnInit {
   date: string;
   rating: number;
   hotel_id: number;
+  action : string;;
   constructor(){
 
   }
@@ -64,6 +65,7 @@ export class ReviewDialog {
     this.review.user = this.user.getUserName();
     this.review.date = Date.now().toString();
     this.review.hotel_id = this.hotelId.toString();
+    this.review.action = "reviewOp";
     console.table(this.review);
     this.var = this.api.reviewOperation(this.review).subscribe(
       r => {

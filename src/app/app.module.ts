@@ -32,6 +32,7 @@ import { HotelDisplayComponentComponent } from './hotel-display-component/hotel-
 import {MatCardModule} from '@angular/material/card';
 import { ReviewDialogComponent, ReviewDialog } from './review-dialog/review-dialog.component';
 import { EditReviewDialogComponent, EditReviewDialog } from './edit-review-dialog/edit-review-dialog.component';
+import { HotelBookMarkComponent } from './hotel-book-mark/hotel-book-mark.component';
 
 const appRoutes: Routes = [
   {
@@ -68,8 +69,9 @@ const appRoutes: Routes = [
     ReviewDialogComponent,
     EditReviewDialogComponent,
     EditReviewDialog,
-  ReviewDialog,
-  EditReviewDialogComponent  ],
+    ReviewDialog,
+  EditReviewDialogComponent,
+  HotelBookMarkComponent  ],
   entryComponents: [UserRegistrationDialog, SearchResultsDialog, ReviewDialog, EditReviewDialog],
 
   imports: [

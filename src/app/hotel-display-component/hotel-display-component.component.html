@@ -14,10 +14,12 @@
                         </mat-card-header>
                         <mat-card-actions>
                                 <app-review-dialog [hotel_id] = "hotel.hotelId"></app-review-dialog>
+                                <app-hotel-book-mark [hotel_id] = "hotel.hotelId"></app-review-dialog>
+
                         </mat-card-actions>
                     </mat-card> 
   </ng-container>
-  <ng-container *ngIf="reviews | async as reviews; else loading">
+  <ng-container *ngIf="reviews | async as reviews; else loading;">
         <h1> Reviews </h1>
                   <mat-divider></mat-divider>
                   <mat-card class="review-card" *ngFor="let review of reviews" style="margin-top:10px; background-color:lightgrey; width : 60%">
@@ -32,10 +34,12 @@
                                     </p>
                             </mat-card-content>
                             <mat-card-actions>
-                                    <button *ngIf="review.reviewLike == false" mat-icon-button (click) = "toggleReviewLike(review.reviewId, 'true')" aria-label="Example icon-button with a heart icon">    Like?  </button>
+                                    <button *ngIf="review.reviewLike == false" mat-icon-button (click) = "toggleReviewLike(review.reviewId, 'true')" aria-label="Example icon-button with a heart icon">    Like?                                    </button>
                                     <button *ngIf="review.reviewLike == true" mat-icon-button color="warn" (click) = "toggleReviewLike(review.reviewId, 'false')" aria-label="Example icon-button with a heart icon">
                                             Unlike?
                                     </button>
+                                    <app-edit-review-dialog *ngIf= "review.canEdit == true" [reviewInfo] = "review">    </app-edit-review-dialog>
+                                    
                             </mat-card-actions>
                       </mat-card> 
     </ng-container>

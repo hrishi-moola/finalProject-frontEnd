@@ -11,6 +11,9 @@ import { UserService } from '../user.service';
 export class HotelDisplayComponentComponent implements OnInit {
 
 hotel : Observable<any>;
+
+cachedData : any;
+reviewsLiked : any;
 reviewLikes : Observable<any>;
 hotelLike : Observable<any>;
 reviews : Observable<any>;
@@ -32,9 +35,9 @@ hotelDataRetrieved : boolean = false;
       let reviewsLiked : any;
       this.hotelDataService.getLikedReviews(hotelInfo.hotelId.toString(),this.userService.getUserName()).subscribe(
         r=> {
-         r['output'];
           this.hotel = of(hotelInfo);
           let reviewList : any;
+          this.reviewsLiked = r['output'];
           reviewList = this.allData.reviewList;
           let finalReviewList  = [];
           for(var x in reviewList){
@@ -47,10 +50,14 @@ hotelDataRetrieved : boolean = false;
               date: ts,
               reviewId : reviewList[x].review_id,
               rating: reviewList[x].averageRating,
-              reviewLike : false
+              reviewLike : false,
+              canEdit: false
             }
-            if(r['output'].includes(reviewInfo.reviewId))
+            if(reviewInfo.user == this.userService.getUserName())
+              reviewInfo.canEdit = true;
+            if(r['output'].includes(reviewInfo.reviewId)){
               reviewInfo.reviewLike = true;
+            }
             finalReviewList.push(reviewInfo);
             this.reviews = of(finalReviewList);
           }
@@ -68,30 +75,48 @@ hotelDataRetrieved : boolean = false;
     this.hotelDataService.toggleReviewLike(reviewId, userName, reviewLike).subscribe(
       r=>{
         console.log(r);
-        for(var x in this.reviews['value']){
-          if(this.reviews['value'][x].reviewId == reviewId){
-            this.reviews['value'][x].reviewLike = reviewLike;
-            this.reviews[]
+        if(reviewLike === true)
+        delete(this.reviewsLiked[reviewId]);
+        else
+          this.reviewsLiked.push(reviewId);
+        let reviewList : any;
+        reviewList = this.allData.reviewList;
+        let finalReviewList  = [];
+        for(var x in reviewList){
+          var ts = new Date(parseInt(reviewList[x].reviewDate)).toDateString();
+          var reviewInfo = {
+            title: reviewList[x].title,
+            reviewText: reviewList[x].reviewText,
+            user: reviewList[x].user,
+            hotelId: reviewList[x].hotel_id,
+            date: ts,
+            reviewId : reviewList[x].review_id,
+            rating: reviewList[x].averageRating,
+            reviewLike : false
           }
+
+          if(this.reviewsLiked.includes(reviewInfo.reviewId)){
+            reviewInfo.reviewLike = true;
+          }
+          finalReviewList.push(reviewInfo);
+          this.reviews = of(finalReviewList);
         }
-      }, 
+        }, 
       r => {
         console.log("something failed " + r);
       }
     )
     alert("Gotta act on this one !" + reviewId + " " + userName + " " + reviewLike);
   }
-  // toggleHotelLike(hotelId : any, userName : any, reviewLike : any){
-  //   this.hotelDataService.addHotelLike(hotelId, userName).subscribe(
-  //     r=>{
-  //       console.log(r);
-  //       this.reviews.getreviewLike = true;
-  //     }, 
-  //     r => {
-  //       console.log("something failed");
-  //     }
-  //   )
-  //   alert("Gotta act on this one !" + review + " " + userName + " " + reviewLike);
-// }
+  toggleHotelLike(hotelId : any, userName : any){
+    this.hotelDataService.addHotelLike(hotelId, userName).subscribe(
+      r=>{
+        console.log(r);
+      }, 
+      r => {
+        console.log("something failed");
+      }
+    )
+}
 
 }

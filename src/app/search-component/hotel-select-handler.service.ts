@@ -28,7 +28,8 @@ export class HotelSelectHandler {
     }
       getHotelData (hotelId: string): Observable<any> {
         return this.http.post(dropWizardUrl + "/hotels/details", {
-          hotelId: hotelId
+          hotelId: hotelId,
+          
         });
       }
       doLol(){

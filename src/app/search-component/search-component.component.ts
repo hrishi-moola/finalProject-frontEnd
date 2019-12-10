@@ -48,30 +48,32 @@ export class SearchComponentComponent implements OnInit {
 
   submitSearchString(){
     alert(this.searchString + " " + this.selectedCity);
-     this.var = this.api.searchHotels(
-      this.selectedCity,
-      this.searchString
-    ).subscribe(
-      r => {
-        console.log(r);
-        let displayData = [];
-        let something : any;
-        something = r;
-        for(var x in something){
-          displayData.push(JSON.parse(r[x]));
-        }
-        let dialogRef = this.dialog.open(SearchResultsDialog, {
-          data: displayData
-            });
-            dialogRef.afterClosed().subscribe(result =>{
-              this.hotelInformation.emit(result.data);
-              console.log(result.data);
-              this.router.navigateByUrl('/hotelDetails',  {state: {data: result.data}});
-            });
-      },
-      r => {
-        alert(r.error);
-      });
+    if(this.searchString != "" || this.selectedCity != ""){
+      this.var = this.api.searchHotels(
+        this.selectedCity,
+        this.searchString
+      ).subscribe(
+        r => {
+          console.log(r);
+          let displayData = [];
+          let something : any;
+          something = r;
+          for(var x in something){
+            displayData.push(JSON.parse(r[x]));
+          }
+          let dialogRef = this.dialog.open(SearchResultsDialog, {
+            data: displayData
+              });
+              dialogRef.afterClosed().subscribe(result =>{
+                this.hotelInformation.emit(result.data);
+                console.log(result.data);
+                this.router.navigateByUrl('/hotelDetails',  {state: {data: result.data}});
+              });
+        },
+        r => {
+          alert(r.error);
+        });
+    }
   }
 }
 

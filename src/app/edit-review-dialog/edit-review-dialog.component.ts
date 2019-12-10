@@ -10,23 +10,20 @@ import {MatDialogModule} from '@angular/material/dialog';
 })
 @Component({
   selector: 'app-edit-review-dialog',
-  template: `<button (click) = "createReview();"> Create/ Edit Review </button>`,
+  template: `<button (click) = "editReview();"> Edit Review </button>`,
   styleUrls: ['./edit-review-dialog.component.css']
 })
 export class EditReviewDialogComponent implements OnInit {
   @Input() hotel_id: any;
-  
+  @Input() reviewInfo : any;
   dialogRef : any;
   constructor(public dialog: MatDialog) {}
 
-  createReview() {
+  editReview() {
     console.log("Registering");
-    let dialogRef = this.dialog.open(EditReviewDialog,{      data: this.hotel_id
+
+    let dialogRef = this.dialog.open(EditReviewDialog,{ data: this.reviewInfo
     });
-        // dialogRef.afterClosed().subscribe(result =>{
-        //   this.viewData.emit(result.data);
-        //   console.log(result.data);
-        // });
   }
 
   ngOnInit() {
@@ -43,6 +40,7 @@ export class EditReviewDialogComponent implements OnInit {
   date: string;
   rating: number;
   hotel_id: number;
+  action: string;
   constructor(){
 
   }
@@ -63,9 +61,9 @@ export class EditReviewDialog {
     this.responseData = "";
     this.review.user = this.user.getUserName();
     this.review.date = Date.now().toString();
-    this.review.hotel_id = this.hotelId.toString();
+    this.review.action = "reviewOp";
     console.table(this.review);
-    this.var = this.api.reviewOperation(this.review).subscribe(
+    this.var = this.api.editReviewOperation(this.review).subscribe(
       r => {
         console.log(r);
       },
@@ -74,7 +72,24 @@ export class EditReviewDialog {
       });
     alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
-  constructor(public dialogRef: MatDialogRef<EditReviewDialog>, @Inject(MAT_DIALOG_DATA) public data: Number, private api: ApiService, private user: UserService) {
-    this.hotelId = data;
+
+  deleteReview(){
+    this.responseData = "";
+    this.review.user = this.user.getUserName();
+    this.review.date = Date.now().toString();
+    this.review.action = "reviewOp";
+    console.table(this.review);
+    this.var = this.api.deleteReviewOperation(this.review).subscribe(
+      r => {
+        console.log(r);
+      },
+      r => {
+        alert(r.error.error);
+      });
+    alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
+  }
+  constructor(public dialogRef: MatDialogRef<EditReviewDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private api: ApiService, private user: UserService) {
+    
+    this.review = data;
   }
 }
