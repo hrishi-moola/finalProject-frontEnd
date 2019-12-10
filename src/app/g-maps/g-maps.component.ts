@@ -31,22 +31,30 @@ export class GMapsComponent implements OnInit {
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var marker;
+
+            var infoWindow = new google.maps.InfoWindow(
+            );
             this.map = new google.maps.Map(this.mapElement.nativeElement, mapProp);
             for( var i = 0; i < this.markers.length; i++ ) {
-              var infoWindow = new google.maps.InfoWindow()
+
               var currentMarker = JSON.parse(this.markers[i]);
+              var contentString = '<h2>' + currentMarker.name+'</h2> <h3>' + currentMarker.addr+' </h3>';
+
               var position = new google.maps.LatLng(currentMarker.latitude, currentMarker.longitude);
               marker = new google.maps.Marker({
                   position: position,
                   map: this.map,
                   title: currentMarker.name
               });
-              google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                  return function() {
-                      infoWindow.setContent('<h2>' + currentMarker.name+'</h2> <h3>' + currentMarker.addr+' </h3>');
-                      infoWindow.open(this.map, marker);
-                  }
-              })(marker, i));
+              marker.addListener('click', function() {
+                infoWindow.open(this.map, marker);
+;              });
+google.maps.event.addListener(marker, 'click', (function(marker, contentString) {
+  return function() {
+      infoWindow.setContent(contentString);
+      infoWindow.open(this.map, marker);
+  }
+})(marker, contentString));
           }
           });
       

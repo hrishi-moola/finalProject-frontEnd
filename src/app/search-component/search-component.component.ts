@@ -47,7 +47,6 @@ export class SearchComponentComponent implements OnInit {
   }
 
   submitSearchString(){
-    alert(this.searchString + " " + this.selectedCity);
     if(this.searchString != "" || this.selectedCity != ""){
       this.var = this.api.searchHotels(
         this.selectedCity,

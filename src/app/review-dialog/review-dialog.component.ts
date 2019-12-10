@@ -70,11 +70,12 @@ export class ReviewDialog {
     this.var = this.api.reviewOperation(this.review).subscribe(
       r => {
         console.log(r);
+        this.dialogRef.close();
       },
       r => {
         alert(r.error.error);
       });
-    alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
+    // alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
   constructor(public dialogRef: MatDialogRef<ReviewDialog>, @Inject(MAT_DIALOG_DATA) public data: Number, private api: ApiService, private user: UserService) {
     this.hotelId = data;

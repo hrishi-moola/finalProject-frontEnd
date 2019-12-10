@@ -65,11 +65,12 @@ export class EditReviewDialog {
     this.var = this.api.editReviewOperation(this.review).subscribe(
       r => {
         console.log(r);
+        this.dialogRef.close;
       },
       r => {
         alert(r.error.error);
       });
-    alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
+    // alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
 
   deleteReview(){
@@ -81,11 +82,12 @@ export class EditReviewDialog {
     this.var = this.api.deleteReviewOperation(this.review).subscribe(
       r => {
         console.log(r);
+        this.dialogRef.close;
       },
       r => {
         alert(r.error.error);
       });
-    alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
+    // alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
   constructor(public dialogRef: MatDialogRef<EditReviewDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private api: ApiService, private user: UserService) {
     

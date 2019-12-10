@@ -19,26 +19,24 @@ export class LoginPageComponent implements OnInit {
   }
 
   tryLogin() {
-    this.user.setToken("token", "someUser");
+    this.var = this.api.login(
+      this.email,
+      this.password
+    ).subscribe(
+      r => {
+        console.log(r);
+        if (r.auth) {
+          this.user.setToken(r.token, this.var.user);
           this.router.navigateByUrl('/landingPage');
-    // this.var = this.api.login(
-    //   this.email,
-    //   this.password
-    // ).subscribe(
-    //   r => {
-    //     console.log(r);
-    //     if (r.auth) {
-    //       this.user.setToken(r.token, "someUser");
-    //       this.router.navigateByUrl('/landingPage');
-    //     } else {
-    //       alert(r.error);
-    //     }
-    //   },
-    //   r => {
-    //     alert(r.error);
-    //   });
+        } else {
+          alert(r.error);
+        }
+      },
+      r => {
+        alert(r.error);
+      });
     // if (this.var.token) {
-    //   this.user.setToken(this.var.token);
+    //   this.user.setToken(this.var.token, this.var.user);
     //   this.router.navigateByUrl('/landingPage');
     // } else{
     //   alert(this.var.error);

@@ -27,6 +27,7 @@ export class HotelBookMarkComponent implements OnInit {
             });
       },
       r => {
+        // alert(r.error);
         alert(r.error);
       });
   }
@@ -58,7 +59,7 @@ export class BookmarksDialog {
       r => {
         alert(r.error);
       });
-    alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
+    // alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
   constructor(public dialogRef: MatDialogRef<BookmarksDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private api: ApiService, private user: UserService) {
     this.hotels = data;

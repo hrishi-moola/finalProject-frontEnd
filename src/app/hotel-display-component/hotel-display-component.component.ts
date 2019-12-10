@@ -31,6 +31,8 @@ hotelDataRetrieved : boolean = false;
           hotelId: this.allData.hotelInfo.hotel_id,
           city: this.allData.hotelInfo.city,
           state: this.allData.hotelInfo.state,
+          latitude: this.allData.hotelInfo.latitude,
+          longitude: this.allData.hotelInfo.longitude,
                };
       let reviewsLiked : any;
       this.hotelDataService.getLikedReviews(hotelInfo.hotelId.toString(),this.userService.getUserName()).subscribe(
