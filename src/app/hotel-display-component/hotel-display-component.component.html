@@ -12,6 +12,10 @@
                             <mat-card-title > {{hotel.hotelName}}</mat-card-title>
                             <mat-card-subtitle> {{hotel.address}},{{hotel.city}}, {{hotel.state}}</mat-card-subtitle>
                         </mat-card-header>
+                        <mat-card-content>
+                                <h2>Attractions nearby!</h2>
+                                <app-attractions-nearby [hotel] = "hotel"></app-attractions-nearby>
+                        </mat-card-content>
                         <mat-card-actions>
                                 <app-review-dialog [hotel_id] = "hotel.hotelId"></app-review-dialog>
                                 <app-hotel-book-mark [hotel_name] = "hotel.hotelName" [hotel_id] = "hotel.hotelId"></app-hotel-book-mark >

@@ -33,6 +33,7 @@ import {MatCardModule} from '@angular/material/card';
 import { ReviewDialogComponent, ReviewDialog } from './review-dialog/review-dialog.component';
 import { EditReviewDialogComponent, EditReviewDialog } from './edit-review-dialog/edit-review-dialog.component';
 import { HotelBookMarkComponent, BookmarksDialog } from './hotel-book-mark/hotel-book-mark.component';
+import { AttractionsNearbyComponent } from './attractions-nearby/attractions-nearby.component';
 
 const appRoutes: Routes = [
   {
@@ -72,7 +73,7 @@ const appRoutes: Routes = [
     ReviewDialog,
     BookmarksDialog,
   EditReviewDialogComponent,  
-  HotelBookMarkComponent  ],
+  HotelBookMarkComponent, AttractionsNearbyComponent  ],
   entryComponents: [UserRegistrationDialog, SearchResultsDialog, ReviewDialog, EditReviewDialog, BookmarksDialog],
 
   imports: [

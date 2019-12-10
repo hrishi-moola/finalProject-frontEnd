@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {ApiService} from '../api.service';
 import {QuerySelectorsModel} from '../../models'
 import { startWith, map } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export interface location {
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit, AfterViewInit {
 
 
     //attach it the data using input
@@ -32,7 +32,7 @@ export class LandingPageComponent implements OnInit {
   displayHotels : string[];
   displayCities : string[];
   inputParams : QuerySelectorsModel;
-
+  markers : "all";
   hotelDetails : any;
 
   constructor(private api: ApiService, private router: Router) { 
@@ -43,6 +43,11 @@ export class LandingPageComponent implements OnInit {
   filteredOptions: Observable<string[]>;
 
   ngOnInit() {
+  
+
+  }
+
+  ngAfterViewInit(){
 
   }
 }

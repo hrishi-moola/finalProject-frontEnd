@@ -4,6 +4,9 @@ import {Observable} from 'rxjs';
 import { constructor } from 'q';
 import {LoginResultModel, QuerySelectorsModel } from '../models'
 import { hostViewClassName } from '@angular/compiler';
+let API_KEY = "AIzaSyDLKLQzmy-p1N5DjEdN4LaTaPbm8C4HqYs";
+let HOST = "https://maps.googleapis.com";
+let PATH = "/maps/api/place/textsearch/json";
 
   @Injectable({
     providedIn: 'root'
@@ -62,10 +65,6 @@ export class ApiService {
       userName: userId.toString()
       });    
 }
-
-
-
-
     reviewOperation(reviewInfo : any): Observable<String>{
       return this.http.post<String>('http://localhost:8090/hotels/reviews', {
         action : "reviewOp",
@@ -96,9 +95,24 @@ export class ApiService {
         review_id: reviewInfo.reviewId.toString()
     });
     }
-  //   addReview(reviewInfo : any){
-  //     return this.http.post('http://localhost:8090/hotels/reviews', JSON.stringify(reviewInfo));
-  // }  
+
+    getLandingPageMarkers():Observable<String>{
+      return this.http.get<String>('http://localhost:8090/maps/markers')
+    }
+
+    
+    // getAttractionsNearby(hotelId : any):Observable<String>{
+    //   return this.http.post<String>('http://localhost:8090/maps/markers',{
+    //     hotelId : hotelId
+    //   });
+      // https://maps.googleapis.com/maps/api/place/textsearch/json?query=tourist%20attractions+in+761%20Post%20Street&location=37.79,-122.41&radius=2000&key=AIzaSyDLKLQzmy-p1N5DjEdN4LaTaPbm8C4HqYs
+      getAttractionsFromPapaGoog(hotel: any) {
+        // var url = HOST + PATH + "?query=tourist%20attractions+in+" + hotel['address'].replace(" ", "%20") + "&location=" + hotel['latitude']+','+['longitude']+"&radius=2000&key=" + API_KEY;
+        // return this.http.post<String>(url,{});
+        
+      }
+      
+
 
 
 }

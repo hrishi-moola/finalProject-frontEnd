@@ -21,7 +21,6 @@ export class EditReviewDialogComponent implements OnInit {
 
   editReview() {
     console.log("Registering");
-
     let dialogRef = this.dialog.open(EditReviewDialog,{ data: this.reviewInfo
     });
   }
