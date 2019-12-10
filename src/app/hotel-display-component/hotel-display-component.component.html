@@ -12,6 +12,9 @@
                             <mat-card-title > {{hotel.hotelName}}</mat-card-title>
                             <mat-card-subtitle> {{hotel.address}},{{hotel.city}}, {{hotel.state}}</mat-card-subtitle>
                         </mat-card-header>
+                        <mat-card-actions>
+                                <app-review-dialog [hotel_id] = "hotel.hotelId"></app-review-dialog>
+                        </mat-card-actions>
                     </mat-card> 
   </ng-container>
   <ng-container *ngIf="reviews | async as reviews; else loading">
@@ -29,9 +32,9 @@
                                     </p>
                             </mat-card-content>
                             <mat-card-actions>
-
-                                    <button mat-icon-button color="warn" (click) = "toggleLike(review.reviewId)" aria-label="Example icon-button with a heart icon">
-                                            <mat-icon>favorite</mat-icon> 
+                                    <button *ngIf="review.reviewLike == false" mat-icon-button (click) = "toggleReviewLike(review.reviewId, 'true')" aria-label="Example icon-button with a heart icon">    Like?  </button>
+                                    <button *ngIf="review.reviewLike == true" mat-icon-button color="warn" (click) = "toggleReviewLike(review.reviewId, 'false')" aria-label="Example icon-button with a heart icon">
+                                            Unlike?
                                     </button>
                             </mat-card-actions>
                       </mat-card> 

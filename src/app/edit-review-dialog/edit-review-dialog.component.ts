@@ -3,18 +3,17 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ApiService } from '../api.service';
 import { UserService } from '../user.service';
 import { DialogDataExampleDialog } from '../functions-dialog/functions-dialog.component';
-
 import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [MatDialogModule]
 })
 @Component({
-  selector: 'app-review-dialog',
+  selector: 'app-edit-review-dialog',
   template: `<button (click) = "createReview();"> Create/ Edit Review </button>`,
-  styleUrls: ['./review-dialog.component.css']
+  styleUrls: ['./edit-review-dialog.component.css']
 })
-export class ReviewDialogComponent implements OnInit {
+export class EditReviewDialogComponent implements OnInit {
   @Input() hotel_id: any;
   
   dialogRef : any;
@@ -22,7 +21,7 @@ export class ReviewDialogComponent implements OnInit {
 
   createReview() {
     console.log("Registering");
-    let dialogRef = this.dialog.open(ReviewDialog,{      data: this.hotel_id
+    let dialogRef = this.dialog.open(EditReviewDialog,{      data: this.hotel_id
     });
         // dialogRef.afterClosed().subscribe(result =>{
         //   this.viewData.emit(result.data);
@@ -32,6 +31,7 @@ export class ReviewDialogComponent implements OnInit {
 
   ngOnInit() {
   }
+
 }
 
 
@@ -50,11 +50,11 @@ export class ReviewDialogComponent implements OnInit {
 
 @Component({
   selector: 'review-dialog-example',
-  templateUrl: 'review-dialog.component.html',
+  templateUrl: 'edit-review-dialog.component.html',
   providers: [ ApiService ]
 
 })
-export class ReviewDialog {
+export class EditReviewDialog {
   responseData : string;
   review = new reviewInfo();
   hotelId : any;
@@ -74,7 +74,7 @@ export class ReviewDialog {
       });
     alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
-  constructor(public dialogRef: MatDialogRef<ReviewDialog>, @Inject(MAT_DIALOG_DATA) public data: Number, private api: ApiService, private user: UserService) {
+  constructor(public dialogRef: MatDialogRef<EditReviewDialog>, @Inject(MAT_DIALOG_DATA) public data: Number, private api: ApiService, private user: UserService) {
     this.hotelId = data;
   }
 }

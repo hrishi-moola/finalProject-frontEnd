@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelDataService } from './hotel-data.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of} from 'rxjs';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-hotel-display-component',
@@ -10,11 +11,13 @@ import { Observable, of } from 'rxjs';
 export class HotelDisplayComponentComponent implements OnInit {
 
 hotel : Observable<any>;
+reviewLikes : Observable<any>;
+hotelLike : Observable<any>;
 reviews : Observable<any>;
 hotelId : any;
 allData : any;
 hotelDataRetrieved : boolean = false;
-  constructor(private hotelDataService: HotelDataService) { }
+  constructor(private hotelDataService: HotelDataService, private userService: UserService) { }
 
   ngOnInit() {
     console.log(history.state.data);
@@ -22,30 +25,73 @@ hotelDataRetrieved : boolean = false;
         var hotelInfo = {
           hotelName: this.allData.hotelInfo.name,
           address: this.allData.hotelInfo.addr,
+          hotelId: this.allData.hotelInfo.hotel_id,
           city: this.allData.hotelInfo.city,
           state: this.allData.hotelInfo.state,
                };
-    this.hotel = of(hotelInfo);
-    let reviewList : any;
-    reviewList = this.allData.reviewList;
-    let finalReviewList  = [];
-    for(var x in reviewList){
-      var ts = new Date(parseInt(reviewList[x].reviewDate)).toDateString();
-      var reviewInfo = {
-        title: reviewList[x].title,
-        reviewText: reviewList[x].reviewText,
-        user: reviewList[x].user,
-        date: ts,
-        reviewId : reviewList[x].review_id,
-        rating: reviewList[x].averageRating
-      }
-      finalReviewList.push(reviewInfo);
-    }
-    this.reviews = of(finalReviewList);
+      let reviewsLiked : any;
+      this.hotelDataService.getLikedReviews(hotelInfo.hotelId.toString(),this.userService.getUserName()).subscribe(
+        r=> {
+         r['output'];
+          this.hotel = of(hotelInfo);
+          let reviewList : any;
+          reviewList = this.allData.reviewList;
+          let finalReviewList  = [];
+          for(var x in reviewList){
+            var ts = new Date(parseInt(reviewList[x].reviewDate)).toDateString();
+            var reviewInfo = {
+              title: reviewList[x].title,
+              reviewText: reviewList[x].reviewText,
+              user: reviewList[x].user,
+              hotelId: reviewList[x].hotel_id,
+              date: ts,
+              reviewId : reviewList[x].review_id,
+              rating: reviewList[x].averageRating,
+              reviewLike : false
+            }
+            if(r['output'].includes(reviewInfo.reviewId))
+              reviewInfo.reviewLike = true;
+            finalReviewList.push(reviewInfo);
+            this.reviews = of(finalReviewList);
+          }
+        }, r=> {
+          console.log("oops");
+        }
+      );
+
+
     console.log(this.reviews);
   }
 
-  toggleLike(review : any){
-    alert("Gotta like this one !" + review);
+  toggleReviewLike(reviewId : any, reviewLike : any){
+    let userName = this.userService.getUserName();
+    this.hotelDataService.toggleReviewLike(reviewId, userName, reviewLike).subscribe(
+      r=>{
+        console.log(r);
+        for(var x in this.reviews['value']){
+          if(this.reviews['value'][x].reviewId == reviewId){
+            this.reviews['value'][x].reviewLike = reviewLike;
+            this.reviews[]
+          }
+        }
+      }, 
+      r => {
+        console.log("something failed " + r);
+      }
+    )
+    alert("Gotta act on this one !" + reviewId + " " + userName + " " + reviewLike);
   }
+  // toggleHotelLike(hotelId : any, userName : any, reviewLike : any){
+  //   this.hotelDataService.addHotelLike(hotelId, userName).subscribe(
+  //     r=>{
+  //       console.log(r);
+  //       this.reviews.getreviewLike = true;
+  //     }, 
+  //     r => {
+  //       console.log("something failed");
+  //     }
+  //   )
+  //   alert("Gotta act on this one !" + review + " " + userName + " " + reviewLike);
+// }
+
 }

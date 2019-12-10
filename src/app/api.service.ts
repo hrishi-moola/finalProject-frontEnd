@@ -49,7 +49,7 @@ export class ApiService {
 
 
     reviewOperation(reviewInfo : any): Observable<String>{
-      return this.http.post<String>('http://localhost:8090/hotels/reviewsOperation', reviewInfo);
+      return this.http.post<String>('http://localhost:8090/hotels/reviews', JSON.stringify(reviewInfo));
     }
 
 }

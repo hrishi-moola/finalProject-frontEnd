@@ -19,7 +19,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   tryLogin() {
-    this.user.setToken("token");
+    this.user.setToken("token", "someUser");
           this.router.navigateByUrl('/landingPage');
     // this.var = this.api.login(
     //   this.email,
@@ -28,7 +28,7 @@ export class LoginPageComponent implements OnInit {
     //   r => {
     //     console.log(r);
     //     if (r.auth) {
-    //       this.user.setToken(r.token);
+    //       this.user.setToken(r.token, "someUser");
     //       this.router.navigateByUrl('/landingPage');
     //     } else {
     //       alert(r.error);
