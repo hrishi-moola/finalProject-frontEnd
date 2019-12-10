@@ -3,6 +3,7 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { constructor } from 'q';
 import {LoginResultModel, QuerySelectorsModel } from '../models'
+import { hostViewClassName } from '@angular/compiler';
 
   @Injectable({
     providedIn: 'root'
@@ -47,6 +48,23 @@ export class ApiService {
       return this.http.get<QuerySelectorsModel>('http://localhost:8090/hotels/search');
     }
 
+    insertAndFetchBookmarks(hotelId: any, userId:any, hotelName : any) : Observable<String> {
+      return this.http.post<String>('http://localhost:8090/hotels/bookmarks', {
+        action : "addAndFetchBookmarks",
+        userName: userId.toString(),
+        hotelId : hotelId.toString(),
+        hotelName : hotelName.toString()
+    });    
+  }
+  clearBookmarks(userId:any) : Observable<String> {
+    return this.http.post<String>('http://localhost:8090/hotels/bookmarks', {
+      action : "clearBookmarks",
+      userName: userId.toString()
+      });    
+}
+
+
+
 
     reviewOperation(reviewInfo : any): Observable<String>{
       return this.http.post<String>('http://localhost:8090/hotels/reviews', {
@@ -55,8 +73,7 @@ export class ApiService {
         user: reviewInfo.user,
         rating: reviewInfo.rating.toString(),
         title: reviewInfo.title,
-        hotel_id: reviewInfo.hotelId.toString(),
-        review_id: reviewInfo.review_Id.toString()
+        hotel_id: reviewInfo.hotel_id.toString()
     });
     }
 

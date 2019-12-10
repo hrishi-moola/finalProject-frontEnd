@@ -1,1 +1,16 @@
-<p>hotel-book-mark works!</p>
+<p>search-results-dialog works!</p>
+<h2 mat-dialog-title>Query Confirmation</h2>
+<mat-dialog-content class="mat-typography">
+    <h4> These are the hotels that you've liked. </h4>
+    <mat-list #hotels >
+      <mat-list-item *ngFor="let hotel of data">
+        {{hotel}}
+      </mat-list-item>
+    </mat-list>
+    <p>
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click) = "deleteReview();" cdkFocusInitial>Submit Query</button>
+</mat-dialog-actions>

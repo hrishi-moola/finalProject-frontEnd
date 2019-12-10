@@ -12,59 +12,55 @@ import { UserService } from '../user.service';
   styleUrls: ['./hotel-book-mark.component.css']
 })
 export class HotelBookMarkComponent implements OnInit {
-  @Input('hotel_id') hoteId : any;
-
-  constructor(public dialog: MatDialog) {}
+  @Input('hotel_id') hotelId : any;
+  @Input('hotel_name') hotelName : any;
+  constructor(public dialog: MatDialog, private api: ApiService, private user: UserService) {}
 
   viewBookmarks() {
-    console.log("Registering");
-
-    let dialogRef = this.dialog.open(BookmarksDialog,{ data: this.reviewInfo
-    });
+    console.log("Calling for Bookmarks");
+    this.api.insertAndFetchBookmarks(this.hotelId, this.user.getUserName(), this.hotelName).subscribe(
+      r => {
+        console.log(r);
+        let likedHotels = r['output'];
+        let dialogRef = this.dialog.open(BookmarksDialog, {
+          data: likedHotels
+            });
+      },
+      r => {
+        alert(r.error);
+      });
   }
   ngOnInit() {
+
   }
 
 }
 
 
-
 @Component({
-  selector: 'review-dialog-example',
-  templateUrl: 'edit-review-dialog.component.html',
+  selector: 'bookmark-dialog-example',
+  templateUrl: 'hotel-book-mark.component.html',
   providers: [ ApiService ]
 
 })
 export class BookmarksDialog {
   responseData : string;
-  hotelId : any;
+  hotels : any;
   var : any;
-  registerUser(){
-    this.responseData = "";
-    this.var = this.api.editReviewOperation(this.review).subscribe(
-      r => {
-        console.log(r);
-      },
-      r => {
-        alert(r.error.error);
-      });
-    alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
-  }
 
   deleteReview(){
     this.responseData = "";
-    console.table(this.review);
-    this.var = this.api.deleteReviewOperation(this.review).subscribe(
+    console.table(this.hotels);
+    this.var = this.api.clearBookmarks(this.user.getUserName()).subscribe(
       r => {
         console.log(r);
       },
       r => {
-        alert(r.error.error);
+        alert(r.error);
       });
     alert("There's a lot of backend processing happening right now, please be patient. Modal will disappear when it's complete.");
   }
   constructor(public dialogRef: MatDialogRef<BookmarksDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private api: ApiService, private user: UserService) {
-    
-    this.review = data;
+    this.hotels = data;
   }
 }

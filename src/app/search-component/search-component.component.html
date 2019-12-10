@@ -13,7 +13,7 @@
     <input type="text" placeholder="Keywords for a hotel of your choice" aria-label="SearchString" matInput [(ngModel)] = "searchString" [formControl]="searchBar" [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option *ngFor="let hotel of filteredOptions | async" [value]="hotel">
-        {{hotel}}
+        {{hotel.hotelName}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
